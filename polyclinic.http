@@ -1,0 +1,63 @@
+
+## =========================================== - Polyclinic API - =========================================
+
+### create poly -----------------
+
+POST http://localhost:3000/api/polyclinics/create
+Content-Type: application/json
+Accept: application/json
+Authorization: aaf987cd-d201-4771-b541-689bd82aabd2
+
+{
+    "name": "Poli Umum",
+    "floor": "A2003"
+}
+
+### get poly -----------------
+
+GET http://localhost:3000/api/polyclinics/2
+Content-Type: application/json
+Accept: application/json
+Authorization: aaf987cd-d201-4771-b541-689bd82aabd2
+
+### update poly -----------------
+
+PUT http://localhost:3000/api/polyclinics/4
+Content-Type: application/json
+Accept: application/json
+Authorization: aaf987cd-d201-4771-b541-689bd82aabd2
+
+{
+    "name": "Poli Mata",
+    "floor": "A2008"
+}
+
+### get all poly -----------------
+
+GET http://localhost:3000/api/polyclinics
+Content-Type: application/json
+Accept: application/json
+Authorization: aaf987cd-d201-4771-b541-689bd82aabd2
+
+### delete poly -----------------
+
+DELETE http://localhost:3000/api/polyclinics/4
+Content-Type: application/json
+Accept: application/json
+Authorization: aaf987cd-d201-4771-b541-689bd82aabd2
+
+
+## =========================================== - Drug API - =========================================
+
+### create drug -----------------
+
+POST http://localhost:3000/api/drugs/create
+Content-Type: application/json
+Accept: application/json
+Authorization: 0f6f8c43-6754-4dd3-84f7-1cd2ee3d2c49
+
+{
+    "name": "Actifed",
+    "price": 20000,
+    "description": "Jangan mengonsumsi suatu obat jika alergi terhadap obat tersebut atau sejenisnya, sebelum membicarakannya dengan dokter."
+}

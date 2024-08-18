@@ -1,0 +1,51 @@
+POST http://localhost:3001/api/project/create
+Content-Type: application/json
+Accept: application/json
+Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
+
+{
+    "name": "Menara BCA",
+    "desc": "Pembuatan menara BCA daerah Pagedangan",
+    "usernameClient": "bca"
+}
+
+### update project -----------------
+
+PUT http://localhost:3001/api/project/1
+Content-Type: application/json
+Accept: application/json
+Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
+
+{
+    "name": "Kantor Sinarmas BSD",
+    "desc": "Pembuatan kantor BSD yang berada pada kota tangerang selatan",
+    "usernameClient": "sinarmas"
+}
+
+### get project -----------------
+
+GET http://localhost:3001/api/project/1
+Content-Type: application/json
+Accept: application/json
+Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
+
+{
+    "name": "Kantor Sinarmas BSD",
+    "desc": "Pembuatan kantor BSD yang berada pada kota tangerang selatan",
+    "usernameClient": "sinarmas"
+}
+
+### get all project -----------------
+
+# GET http://localhost:3001/api/projects?name=bca
+GET http://localhost:3001/api/projects
+Content-Type: application/json
+Accept: application/json
+Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
+
+### remove project -----------------
+
+DELETE http://localhost:3001/api/project/2
+Content-Type: application/json
+Accept: application/json
+Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940

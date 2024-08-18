@@ -1,0 +1,119 @@
+## =========================================== - User API - =========================================
+
+## register super user -----------------
+
+POST http://localhost:3001/api/users
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "riza",
+    "password": "rahasia",
+    "name": "Riza Pranata",
+    "email": "riza@gmail.com",
+    "phone": "0897667767657",
+    "status": true,
+    "role": "superAdmin"
+}
+
+### login super user -----------------
+
+POST http://localhost:3001/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "riza",
+    "password": "rahasia"
+}
+
+### login admin -----------------
+
+POST http://localhost:3001/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "agus",
+    "password": "rahasia"
+}
+
+### login doctor -----------------
+
+POST http://localhost:3000/api/users/login
+Content-Type: application/json
+Accept: application/json
+
+{
+    "username": "karina",
+    "password": "rahasia"
+}
+
+
+### create user -----------------
+
+POST http://localhost:3001/api/users/create
+Content-Type: application/json
+Accept: application/json
+Authorization: 3a602303-333a-477e-aa49-e158c38c9060
+
+{
+    "username": "agus",
+    "password": "rahasia",
+    "name": "Agus Salim",
+    "email": "agus@gmail.com",
+    "phone": "085767889990",
+    "status": true,
+    "role": "admin"
+}
+
+### Get current user -----------------
+
+GET http://localhost:3001/api/users/current
+Content-Type: application/json
+Accept: application/json
+Authorization: 9f3b35a1-3aeb-4160-a867-78bb573360b4
+
+### Patch user -----------------
+
+PATCH http://localhost:3000/api/users/current
+Content-Type: application/json
+Accept: application/json
+Authorization: d829a0a3-037e-41fb-b330-43d0e3fbcfa6
+
+{
+    "username": "kuncuy",
+    "password": "rahasia",
+    "name": "Kuncuy Waluyo Sp.A",
+    "email": "kuncuy@gmail.com",
+    "phone": "08977667778",
+    "specialist": "Spesialis Anak",
+    "poliName": "Poli Anak",
+    "status": true,
+    "role": "doctor"
+}
+
+### delete user ---------------
+
+DELETE http://localhost:3001/api/users/delete/karina
+Content-Type: application/json
+Accept: application/json
+Authorization: 296e3161-faea-4ca7-9ce3-04cb48ec06d4
+
+# {
+#     "username": "karina"
+# }
+
+### get all user ---------------
+
+GET http://localhost:3001/api/users
+Content-Type: application/json
+Accept: application/json
+Authorization: 783e20bd-1c30-4d7e-8fbf-2aa6dba321c2
+
+### logout -----------------
+
+DELETE http://localhost:3001/api/users/logout
+Content-Type: application/json
+Accept: application/json
+Authorization: 9f3b35a1-3aeb-4160-a867-78bb573360b4

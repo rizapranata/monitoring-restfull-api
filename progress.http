@@ -1,0 +1,31 @@
+POST http://localhost:3001/api/progress
+Content-Type: application/json
+Accept: application/json
+Authorization: 0380fd07-467a-4e6a-9c73-124cb03e97f3
+# Content-Type: "multipart/form-data",
+
+{
+    "title": "Pemasangan plafon",
+    "desc": "Ini adalah proses pemasangan plafon pada ruang tamu",
+    "usernameClient": "sinarmas",
+    "images": [
+        {
+            "name": "testing 1",
+            "type": "JPG",
+            "data": 234032,
+            "progresId": 1
+        },
+        {
+            "name": "testing 2",
+            "type": "JPG",
+            "data": 234032,
+            "progresId": 1
+        },
+        {
+            "name": "testing 3",
+            "type": "JPG",
+            "data": 234032,
+            "progresId": 1
+        }
+    ]
+}

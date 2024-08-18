@@ -1,0 +1,58 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  username String     @id @db.VarChar(100)
+  password String     @db.VarChar(100)
+  name     String     @db.VarChar(100)
+  token    String?    @db.VarChar(100)
+  email    String?    @db.VarChar(200)
+  phone    String?    @db.VarChar(20)
+  status   Boolean?   @db.TinyInt
+  role     String     @db.VarChar(20)
+  progress Progress[]
+  project  Project[]
+
+  @@map("users")
+}
+
+model Project {
+  id             Int    @id @default(autoincrement())
+  name           String @db.VarChar(225)
+  desc           String @db.Text
+  username       String @db.VarChar(100)
+  user           User   @relation(fields: [username], references: [username])
+  usernameClient String @db.VarChar(100)
+
+  @@map("projects")
+}
+
+model Progress {
+  id             String  @unique @db.VarChar(225)
+  title          String  @db.VarChar(225)
+  desc           String? @db.Text
+  images         Image[]
+  username       String  @db.VarChar(100)
+  user           User    @relation(fields: [username], references: [username])
+  usernameClient String  @db.VarChar(100)
+
+  @@map("progresses")
+}
+
+model Image {
+  id         Int      @id @default(autoincrement())
+  imageUrl   String   @db.VarChar(225)
+  progressId String
+  progress   Progress @relation(fields: [progressId], references: [id])
+
+  @@map("images")
+}
