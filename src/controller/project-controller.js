@@ -112,7 +112,6 @@ const remove = async (req, res, next) => {
     });
   }
 
-
   try {
     const user = req.user;
     const projectId = req.params.projectId;

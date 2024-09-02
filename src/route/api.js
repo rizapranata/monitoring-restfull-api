@@ -58,6 +58,8 @@ userRouter.delete('/api/print-medical-records/:medicalRecordId', printMedicalRec
 
 // Progress API
 userRouter.post('/api/progress', multer({ dest: os.tmpdir() }).array('images', 12), progressController.create);
+userRouter.get('/api/progress', progressController.search);
+userRouter.delete('/api/progress/:progressId', progressController.remove);
 
 // Project API
 userRouter.get('/api/projects', projectController.search);

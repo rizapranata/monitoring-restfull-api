@@ -7,9 +7,9 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "riza",
+    "username": "admin",
     "password": "rahasia",
-    "name": "Riza Pranata",
+    "name": "Super Admin",
     "email": "riza@gmail.com",
     "phone": "0897667767657",
     "status": true,
@@ -23,7 +23,7 @@ Content-Type: application/json
 Accept: application/json
 
 {
-    "username": "riza",
+    "username": "admin",
     "password": "rahasia"
 }
 

@@ -5,7 +5,7 @@ const createProgressValidation = Joi.object({
     title: Joi.string().max(225).required(),
     desc: Joi.string().optional(),
     usernameClient: Joi.string().max(100).required(),
-    images: Joi.array()
+    // images: Joi.object().required()
 });
 
 const getProgressValidation = Joi.number().positive().required();
@@ -17,10 +17,10 @@ const updateProgressValidation = Joi.object({
     images: Joi.array()
 });
 
-const searchDrugValidation = Joi.object({
+const searchProgressValidation = Joi.object({
     page: Joi.number().min(1).positive().default(1),
     size: Joi.number().min(1).positive().max(100).default(10),
-    name: Joi.string().max(100).optional(),
+    title: Joi.string().max(100).optional(),
     // price: Joi.number().positive().optional(),
 });
 
@@ -28,5 +28,5 @@ export {
     createProgressValidation,
     getProgressValidation,
     updateProgressValidation,
-    searchDrugValidation
+    searchProgressValidation
 }

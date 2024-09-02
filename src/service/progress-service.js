@@ -3,6 +3,7 @@ import { createImageValidation } from "../validation/images-validation.js";
 import {
   createProgressValidation,
   getProgressValidation,
+  searchProgressValidation,
   updateProgressValidation,
 } from "../validation/progress-validation.js";
 import { validate } from "../validation/validation.js";
@@ -10,22 +11,11 @@ import path from "path";
 import fs from "fs";
 import { fileURLToPath } from "url";
 
-const generateRandomId = (length = 8) => {
-  const characters =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-  let result = "";
-  for (let i = 0; i < length; i++) {
-    result += characters.charAt(Math.floor(Math.random() * characters.length));
-  }
-  return result;
-};
-
 const create = async (user, request) => {
   const imageList = [];
-  const requestBody = request.body;
   const requestFile = request.files;
-  const progressId = generateRandomId();
-  const progress = validate(createProgressValidation, requestBody);
+  let requestBody = request.body;
+
   let fileNameList = [];
   let __filename = fileURLToPath(import.meta.url);
   let __dirname = path.dirname(__filename);
@@ -39,7 +29,7 @@ const create = async (user, request) => {
     let fileName = item.filename + "." + originalExt;
     let targetPath = path.resolve(
       path.resolve(__dirname, ".."),
-      `public/upload/${fileName}`
+      `../public/upload/${fileName}`
     );
 
     fileNameList.push(fileName);
@@ -51,37 +41,74 @@ const create = async (user, request) => {
   });
 
   console.log("request file:", fileNameList);
-
-  fileNameList.map((image) => {
-    payloadImage = {
-      imageUrl: image,
-      progressId: progressId,
-    };
-    imageList.push(validate(createImageValidation, payloadImage));
-  });
-
-  console.log("payload progress images:", progress);
-
-  return prismaClient.progress.create({
+  const progress = validate(createProgressValidation, requestBody);
+  const result = await prismaClient.progress.create({
     data: {
-      id: progressId,
       title: progress.title,
       desc: progress.desc,
       username: user.username,
       usernameClient: progress.usernameClient,
-      images: {
-        create: imageList,
-      },
     },
-  });
-};
-
-const getAll = async (user) => {
-  return prismaClient.progress.findMany({
     include: {
       images: true,
     },
   });
+
+  fileNameList.map((image) => {
+    payloadImage = {
+      imageUrl: image,
+      progressId: result.id,
+    };
+    imageList.push(validate(createImageValidation, payloadImage));
+  });
+
+  return prismaClient.image.createMany({
+    data: imageList,
+  });
+};
+
+const search = async (user, request) => {
+  request = validate(searchProgressValidation, request);
+  // 1 ((page - 1) * size) = 0
+  // 2 ((page - 1) * size) = 10
+
+  const skip = (request.page - 1) * request.size;
+
+  const filters = [];
+
+  if (request.title) {
+    filters.push({
+      title: {
+        contains: request.title,
+      },
+    });
+  }
+
+  const progress = await prismaClient.progress.findMany({
+    where: {
+      AND: filters,
+    },
+    take: request.size,
+    skip: skip,
+    include: {
+      images: true,
+    },
+  });
+
+  const totalItems = await prismaClient.progress.count({
+    where: {
+      AND: filters,
+    },
+  });
+
+  return {
+    data: progress,
+    paging: {
+      page: request.page,
+      total_item: totalItems,
+      total_page: Math.ceil(totalItems / request.size),
+    },
+  };
 };
 
 const get = async (user, progressId) => {
@@ -133,9 +160,32 @@ const update = async (user, request) => {
   });
 };
 
+const remove = async (user, progressId) => {
+  progressId = validate(getProgressValidation, progressId);
+  const totalDataInDatabase = await prismaClient.progress.count({
+    where: {
+      id: progressId,
+    },
+  });
+
+  if (totalDataInDatabase !== 1) {
+    throw new ResponseError(400, "Project is not found");
+  }
+
+  return prismaClient.progress.delete({
+    where: {
+      id: progressId,
+    },
+    include: {
+      images: true
+    }
+  });
+};
+
 export default {
   create,
   get,
-  getAll,
+  search,
   update,
+  remove
 };

@@ -2,7 +2,7 @@ import Joi from "joi";
 
 const createImageValidation = Joi.object({
     imageUrl: Joi.string().max(225).required(),
-    progressId: Joi.string().max(225).required()
+    progressId: Joi.number().required()
 });
 
 const getProgressValidation = Joi.number().positive().required();
