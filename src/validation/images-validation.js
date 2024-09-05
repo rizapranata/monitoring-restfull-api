@@ -5,7 +5,7 @@ const createImageValidation = Joi.object({
     progressId: Joi.number().required()
 });
 
-const getProgressValidation = Joi.number().positive().required();
+const getImageValidation = Joi.number().positive().required();
 
 const updateProgressValidation = Joi.object({
     id: Joi.number().positive().required(),
@@ -23,7 +23,7 @@ const searchDrugValidation = Joi.object({
 
 export {
     createImageValidation,
-    getProgressValidation,
+    getImageValidation,
     updateProgressValidation,
     searchDrugValidation
 }

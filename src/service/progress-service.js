@@ -1,5 +1,9 @@
 import { prismaClient } from "../application/database.js";
-import { createImageValidation } from "../validation/images-validation.js";
+import { ResponseError } from "../error/response-error.js";
+import {
+  createImageValidation,
+  getImageValidation,
+} from "../validation/images-validation.js";
 import {
   createProgressValidation,
   getProgressValidation,
@@ -137,11 +141,11 @@ const get = async (user, progressId) => {
 const update = async (user, request) => {
   const progress = validate(updateProgressValidation, request);
 
-  const totalProgressInDatabase = prismaClient.progress.count({
+  const totalProgressInDatabase =  await prismaClient.progress.count({
     where: {
-      id: progress.id,
-    },
-  });
+      id: progress.id
+    }
+  })
 
   if (totalProgressInDatabase !== 1) {
     throw new ResponseError(404, "Progress is not found");
@@ -155,7 +159,6 @@ const update = async (user, request) => {
       id: progress.id,
       title: progress.title,
       desc: progress.desc,
-      images: progress.images,
     },
   });
 };
@@ -177,8 +180,63 @@ const remove = async (user, progressId) => {
       id: progressId,
     },
     include: {
-      images: true
-    }
+      images: true,
+    },
+  });
+};
+
+const addImage = async (request) => {
+  const requestFile = request.file;
+  const progressId = request.body.progressId;
+  let __filename = fileURLToPath(import.meta.url);
+  let __dirname = path.dirname(__filename);
+
+  let tmpPath = requestFile.path;
+  let originalExt =
+    requestFile.originalname.split(".")[
+      requestFile.originalname.split(".").length - 1
+    ];
+
+  let fileName = requestFile.filename + "." + originalExt;
+  let targetPath = path.resolve(
+    path.resolve(__dirname, ".."),
+    `../public/upload/${fileName}`
+  );
+
+  // (1) baca file yg masih dilokasi sementara
+  const src = fs.createReadStream(tmpPath);
+  // (2) pindahkan file ke lokasi permanen
+  const dest = fs.createWriteStream(targetPath);
+  src.pipe(dest);
+
+  const payloadImage = {
+    imageUrl: fileName,
+    progressId: progressId,
+  };
+
+  const image = validate(createImageValidation, payloadImage);
+
+  return prismaClient.image.createMany({
+    data: image,
+  });
+};
+
+const removeImage = async (imageId) => {
+  imageId = validate(getImageValidation, imageId);
+  const totalDataInDatabase = await prismaClient.image.count({
+    where: {
+      id: imageId,
+    },
+  });
+
+  if (totalDataInDatabase !== 1) {
+    throw new ResponseError(400, "Project is not found");
+  }
+
+  return prismaClient.image.delete({
+    where: {
+      id: imageId,
+    },
   });
 };
 
@@ -187,5 +245,7 @@ export default {
   get,
   search,
   update,
-  remove
+  remove,
+  addImage,
+  removeImage,
 };

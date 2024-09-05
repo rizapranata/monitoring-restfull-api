@@ -123,7 +123,7 @@ const update = async (user, request) => {
       id: project.id,
       name: project.name,
       desc: project.desc,
-      usernameClient: project.usernameClient,
+      // usernameClient: project.usernameClient,
     },
   });
 };

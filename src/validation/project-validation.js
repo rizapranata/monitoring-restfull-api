@@ -12,7 +12,7 @@ const updateProjectValidation = Joi.object({
     id: Joi.number().positive().required(),
     name: Joi.string().max(225).required(),
     desc: Joi.string().optional(),
-    usernameClient: Joi.string().max(100).required(),
+    // usernameClient: Joi.string().max(100).required(),
 });
 
 const searchProjectValidation = Joi.object({

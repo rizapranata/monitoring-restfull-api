@@ -14,7 +14,7 @@ const updateProgressValidation = Joi.object({
     id: Joi.number().positive().required(),
     title: Joi.string().max(225).required(),
     desc: Joi.string().optional(),
-    images: Joi.array()
+    // images: Joi.array()
 });
 
 const searchProgressValidation = Joi.object({
