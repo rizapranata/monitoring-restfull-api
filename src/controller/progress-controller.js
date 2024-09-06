@@ -119,9 +119,16 @@ const addImage = async (req, res, next) => {
   try {
     const result = await progressService.addImage(req);
     res.status(200).json({
+      success: true,
+      message: `Added image is success`,
       data: result,
     });
   } catch (error) {
+    res.json({
+      error: 1,
+      success: false,
+      message: error.message,
+    });
     next(error);
   }
 };
@@ -131,12 +138,14 @@ const removeImage = async (req, res, next) => {
     const imageId = req.params.imageId;
     const result = await progressService.removeImage(imageId);
     res.status(200).json({
+      success: true,
       message: `Image id ${imageId} is success deleted`,
       data: result,
     });
   } catch (error) {
     res.json({
       error: 1,
+      success: false,
       message: error.message,
     });
     next(error);
