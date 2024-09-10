@@ -25,11 +25,12 @@ CREATE TABLE `projects` (
 
 -- CreateTable
 CREATE TABLE `progresses` (
-    `id` VARCHAR(225) NOT NULL,
+    `id` INTEGER NOT NULL AUTO_INCREMENT,
     `title` VARCHAR(225) NOT NULL,
     `desc` TEXT NULL,
     `username` VARCHAR(100) NOT NULL,
     `usernameClient` VARCHAR(100) NOT NULL,
+    `projectId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
@@ -38,16 +39,19 @@ CREATE TABLE `progresses` (
 CREATE TABLE `images` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `imageUrl` VARCHAR(225) NOT NULL,
-    `progressId` VARCHAR(225) NOT NULL,
+    `progressId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
 -- AddForeignKey
-ALTER TABLE `projects` ADD CONSTRAINT `projects_username_fkey` FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `projects` ADD CONSTRAINT `projects_username_fkey` FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `progresses` ADD CONSTRAINT `progresses_username_fkey` FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `progresses` ADD CONSTRAINT `progresses_username_fkey` FOREIGN KEY (`username`) REFERENCES `users`(`username`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE `images` ADD CONSTRAINT `images_progressId_fkey` FOREIGN KEY (`progressId`) REFERENCES `progresses`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE `progresses` ADD CONSTRAINT `progresses_projectId_fkey` FOREIGN KEY (`projectId`) REFERENCES `projects`(`id`) ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE `images` ADD CONSTRAINT `images_progressId_fkey` FOREIGN KEY (`progressId`) REFERENCES `progresses`(`id`) ON DELETE CASCADE ON UPDATE CASCADE;

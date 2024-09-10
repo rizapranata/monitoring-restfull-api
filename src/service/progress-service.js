@@ -51,6 +51,7 @@ const create = async (user, request) => {
       title: progress.title,
       desc: progress.desc,
       username: user.username,
+      projectId: progress.projectId,
       usernameClient: progress.usernameClient,
     },
     include: {

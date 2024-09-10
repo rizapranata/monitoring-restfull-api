@@ -19,31 +19,34 @@ model User {
   phone    String?    @db.VarChar(20)
   status   Boolean?   @db.TinyInt
   role     String     @db.VarChar(20)
-  progress Progress[] 
-  project  Project[] 
+  progress Progress[]
+  project  Project[]
 
   @@map("users")
 }
 
 model Project {
-  id             Int    @id @default(autoincrement())
-  name           String @db.VarChar(225)
-  desc           String @db.Text
-  username       String @db.VarChar(100)
-  user           User   @relation(fields: [username], references: [username], onDelete: Cascade)
-  usernameClient String @db.VarChar(100)
+  id             Int        @id @default(autoincrement())
+  name           String     @db.VarChar(225)
+  desc           String     @db.Text
+  username       String     @db.VarChar(100)
+  user           User       @relation(fields: [username], references: [username], onDelete: Cascade)
+  usernameClient String     @db.VarChar(100)
+  progress       Progress[]
 
   @@map("projects")
 }
 
 model Progress {
-  id             Int  @id @default(autoincrement())
+  id             Int     @id @default(autoincrement())
   title          String  @db.VarChar(225)
   desc           String? @db.Text
   images         Image[]
   username       String  @db.VarChar(100)
   user           User    @relation(fields: [username], references: [username], onDelete: Cascade)
   usernameClient String  @db.VarChar(100)
+  project        Project @relation(fields: [projectId], references: [id])
+  projectId      Int
 
   @@map("progresses")
 }

@@ -4,6 +4,7 @@ const createProgressValidation = Joi.object({
     // id: Joi.string().max(225).required(),
     title: Joi.string().max(225).required(),
     desc: Joi.string().optional(),
+    projectId: Joi.number().positive().required(),
     usernameClient: Joi.string().max(100).required(),
     // images: Joi.object().required()
 });

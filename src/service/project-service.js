@@ -24,6 +24,9 @@ const create = async (user, request) => {
 
   return prismaClient.project.create({
     data: project,
+    include: {
+      progress: true
+    }
   });
 };
 
@@ -47,8 +50,12 @@ const get = async (user, projectId) => {
     select: {
       name: true,
       desc: true,
+      progress: true,
       usernameClient: true,
     },
+    include: {
+      progress: true
+    }
   });
 };
 
@@ -85,6 +92,9 @@ const search = async (user, request) => {
     },
     take: request.size,
     skip: skip,
+    include: {
+      progress: true
+    }
   });
 
   const totalItems = await prismaClient.project.count({
