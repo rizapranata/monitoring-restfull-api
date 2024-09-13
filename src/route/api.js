@@ -11,6 +11,7 @@ import progressController from "../controller/progress-controller.js";
 import projectController from "../controller/project-controller.js";
 import multer from "multer";
 import os from "os";
+import paymentController from "../controller/payment-controller.js";
 
 const userRouter = new express.Router()
 userRouter.use(authMiddleware)
@@ -71,6 +72,12 @@ userRouter.post('/api/project', projectController.create);
 userRouter.get('/api/project/:projectId', projectController.get);
 userRouter.put('/api/project/:projectId', projectController.update);
 userRouter.delete('/api/project/:projectId', projectController.remove);
+
+// Payment API
+userRouter.post('/api/payment', paymentController.create);
+userRouter.put('/api/payment/:paymentId', paymentController.update);
+userRouter.get('/api/payment/:paymentId', paymentController.get);
+userRouter.get('/api/payment', paymentController.getAll);
 
 export {
     userRouter

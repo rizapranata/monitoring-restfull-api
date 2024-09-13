@@ -1,0 +1,25 @@
+POST http://localhost:3001/api/payment
+Content-Type: application/json
+Accept: application/json
+Authorization: 23d4afaf-3069-48f8-a09e-166a93a684d8
+
+{
+    "isSettle": true,
+    "projectId": 2
+}
+
+### update payment
+PUT http://localhost:3001/api/payment/1
+Content-Type: application/json
+Accept: application/json
+Authorization: 23d4afaf-3069-48f8-a09e-166a93a684d8
+
+{
+    "isSettle": false
+}
+
+### get all payment
+GET http://localhost:3001/api/payment
+Content-Type: application/json
+Accept: application/json
+Authorization: 407edb57-b2fa-4536-828f-a602a5315950

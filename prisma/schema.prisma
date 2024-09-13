@@ -25,6 +25,13 @@ model User {
   @@map("users")
 }
 
+model Payment {
+  id        Int     @id @default(autoincrement())
+  isSettle  Boolean @default(false) @db.Bit(1)
+  projectId Int     @unique
+  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+}
+
 model Project {
   id             Int        @id @default(autoincrement())
   name           String     @db.VarChar(225)
@@ -33,6 +40,7 @@ model Project {
   user           User       @relation(fields: [username], references: [username], onDelete: Cascade)
   usernameClient String     @db.VarChar(100)
   progress       Progress[]
+  payment        Payment?
 
   @@map("projects")
 }
@@ -45,7 +53,7 @@ model Progress {
   username       String  @db.VarChar(100)
   user           User    @relation(fields: [username], references: [username], onDelete: Cascade)
   usernameClient String  @db.VarChar(100)
-  project        Project @relation(fields: [projectId], references: [id])
+  project        Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId      Int
 
   @@map("progresses")
