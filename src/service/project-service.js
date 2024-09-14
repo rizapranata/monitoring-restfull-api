@@ -61,9 +61,6 @@ const get = async (user, projectId) => {
       progress: true,
       usernameClient: true,
     },
-    include: {
-      progress: true,
-    },
   });
 };
 
