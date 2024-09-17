@@ -77,6 +77,9 @@ const search = async (user, request) => {
   // 1 ((page - 1) * size) = 0
   // 2 ((page - 1) * size) = 10
 
+  console.log("req query:", request);
+
+
   const skip = (request.page - 1) * request.size;
 
   const filters = [];

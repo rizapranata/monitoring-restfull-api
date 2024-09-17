@@ -36,10 +36,14 @@ const search = async (req, res, next) => {
     });
   }
 
+  console.log("req quesry:", req.query);
+
   try {
     const user = req.user;
     const request = {
       title: req.query.title,
+      page: req.query.page,
+      size: req.query.size
     };
 
     const result = await progressService.search(user, request);
