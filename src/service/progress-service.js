@@ -142,6 +142,14 @@ const get = async (user, progressId) => {
   });
 };
 
+const getAll = async () => {
+  return prismaClient.progress.findMany({
+    include: {
+      images: true,
+    },
+  });
+};
+
 const update = async (user, request) => {
   const progress = validate(updateProgressValidation, request);
 
@@ -247,6 +255,7 @@ const removeImage = async (imageId) => {
 export default {
   create,
   get,
+  getAll,
   search,
   update,
   remove,

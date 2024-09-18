@@ -27,6 +27,25 @@ const create = async (req, res, next) => {
   }
 };
 
+const getAllProgress = async (req, res, next) => {
+  let policy = policyFor(req.user);
+  if (!policy.can("view", "Progress")) {
+    return res.json({
+      error: 1,
+      message: `You're not allowed to perform this action`,
+    });
+  }
+
+  try {
+    const result = await progressService.getAll();
+    res.status(200).json({
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const search = async (req, res, next) => {
   let policy = policyFor(req.user);
   if (!policy.can("view", "Progress")) {
@@ -36,14 +55,12 @@ const search = async (req, res, next) => {
     });
   }
 
-  console.log("req quesry:", req.query);
-
   try {
     const user = req.user;
     const request = {
       title: req.query.title,
       page: req.query.page,
-      size: req.query.size
+      size: req.query.size,
     };
 
     const result = await progressService.search(user, request);
@@ -163,5 +180,6 @@ export default {
   update,
   addImage,
   removeImage,
+  getAllProgress,
   get,
 };
