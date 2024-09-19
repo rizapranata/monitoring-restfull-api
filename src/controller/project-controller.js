@@ -71,6 +71,17 @@ const get = async (req, res, next) => {
   }
 };
 
+const getAllProject = async (req, res, next) => {
+  try {
+    const result = await projectService.getAll();
+    res.status(200).json({
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const search = async (req, res, next) => {
   let policy = policyFor(req.user);
   if (!policy.can("view", "Project")) {
@@ -91,8 +102,7 @@ const search = async (req, res, next) => {
 
     const result = await projectService.search(user, request);
     res.status(200).json({
-      data: result.data,
-      paging: result.paging,
+      data: result,
     });
   } catch (e) {
     res.json({
@@ -134,5 +144,7 @@ export default {
   update,
   search,
   remove,
+  getAllProject,
   get,
+  
 };

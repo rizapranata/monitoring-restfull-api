@@ -76,10 +76,6 @@ const search = async (user, request) => {
   request = validate(searchProgressValidation, request);
   // 1 ((page - 1) * size) = 0
   // 2 ((page - 1) * size) = 10
-
-  console.log("req query:", request);
-
-
   const skip = (request.page - 1) * request.size;
 
   const filters = [];
@@ -95,6 +91,7 @@ const search = async (user, request) => {
   const progress = await prismaClient.progress.findMany({
     where: {
       AND: filters,
+      projectId: request.projectId
     },
     take: request.size,
     skip: skip,
@@ -106,6 +103,7 @@ const search = async (user, request) => {
   const totalItems = await prismaClient.progress.count({
     where: {
       AND: filters,
+      projectId: request.projectId
     },
   });
 
@@ -153,11 +151,11 @@ const getAll = async () => {
 const update = async (user, request) => {
   const progress = validate(updateProgressValidation, request);
 
-  const totalProgressInDatabase =  await prismaClient.progress.count({
+  const totalProgressInDatabase = await prismaClient.progress.count({
     where: {
-      id: progress.id
-    }
-  })
+      id: progress.id,
+    },
+  });
 
   if (totalProgressInDatabase !== 1) {
     throw new ResponseError(404, "Progress is not found");

@@ -64,6 +64,10 @@ const get = async (user, projectId) => {
   });
 };
 
+const getAll = async () => {
+  return await prismaClient.project.findMany();
+}
+
 const search = async (user, request) => {
   request = validate(searchProjectValidation, request);
 
@@ -83,7 +87,7 @@ const search = async (user, request) => {
 
   if (request.usernameClient) {
     filters.push({
-      noRm: {
+      usernameClient: {
         contains: request.usernameClient,
       },
     });
@@ -165,6 +169,7 @@ const remove = async (user, projectId) => {
 export default {
   create,
   get,
+  getAll,
   update,
   remove,
   search,

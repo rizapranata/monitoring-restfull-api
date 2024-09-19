@@ -58,6 +58,7 @@ const search = async (req, res, next) => {
   try {
     const user = req.user;
     const request = {
+      projectId: req.query.projectId,
       title: req.query.title,
       page: req.query.page,
       size: req.query.size,
