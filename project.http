@@ -41,7 +41,7 @@ Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
 GET http://localhost:3001/api/projects
 Content-Type: application/json
 Accept: application/json
-Authorization: 6fa6233a-7dd6-4406-9f72-fad734c7e940
+Authorization: 79a9deb7-01f9-4167-ba45-8a408b1af8ae
 
 ### remove project -----------------
 

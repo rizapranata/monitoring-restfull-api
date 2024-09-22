@@ -31,6 +31,7 @@ const policies = {
         can("read", "Progress", {user_id: user.username});
         can("update", "Progress", {user_id: user.username});
         can("read", "Progress", {user_id: user.username});
+        can("delete", "Progress", {user_id: user.username});
         can("view", "Progress");
         can("create", "Image", {user_id: user.username});
         can("read", "Image", {user_id: user.username});

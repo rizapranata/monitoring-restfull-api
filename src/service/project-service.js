@@ -22,8 +22,19 @@ const create = async (user, request) => {
     throw new ResponseError(400, "Project is already eist");
   }
 
-  return prismaClient.project.create({
+  const result = await prismaClient.project.create({
     data: project,
+    include: {
+      progress: true,
+    },
+  });
+
+  // membuat payment data setelah membuat project baru
+  return prismaClient.payment.create({
+    data: {
+      isSettle: false,
+      projectId: result.id,
+    },
   });
 };
 
@@ -47,10 +58,15 @@ const get = async (user, projectId) => {
     select: {
       name: true,
       desc: true,
+      progress: true,
       usernameClient: true,
     },
   });
 };
+
+const getAll = async () => {
+  return await prismaClient.project.findMany();
+}
 
 const search = async (user, request) => {
   request = validate(searchProjectValidation, request);
@@ -71,7 +87,7 @@ const search = async (user, request) => {
 
   if (request.usernameClient) {
     filters.push({
-      noRm: {
+      usernameClient: {
         contains: request.usernameClient,
       },
     });
@@ -85,6 +101,9 @@ const search = async (user, request) => {
     },
     take: request.size,
     skip: skip,
+    include: {
+      progress: true,
+    },
   });
 
   const totalItems = await prismaClient.project.count({
@@ -123,7 +142,7 @@ const update = async (user, request) => {
       id: project.id,
       name: project.name,
       desc: project.desc,
-      usernameClient: project.usernameClient,
+      // usernameClient: project.usernameClient,
     },
   });
 };
@@ -150,7 +169,8 @@ const remove = async (user, projectId) => {
 export default {
   create,
   get,
+  getAll,
   update,
   remove,
-  search
+  search,
 };

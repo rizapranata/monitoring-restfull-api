@@ -29,3 +29,13 @@ Authorization: 0380fd07-467a-4e6a-9c73-124cb03e97f3
         }
     ]
 }
+
+### get all progress -----------------
+
+# GET http://localhost:3001/api/projects?name=bca
+# GET http://localhost:3001/api/progress?size=2&page=2
+
+GET http://localhost:3001/api/progress?page=1
+Content-Type: application/json
+Accept: application/json
+Authorization: 79a9deb7-01f9-4167-ba45-8a408b1af8ae

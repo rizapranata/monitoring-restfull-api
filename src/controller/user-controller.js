@@ -2,13 +2,13 @@ import { policyFor } from "../policy/index.js";
 import userService from "../service/user-service.js"
 
 const register = async (req, res, next) => {
-    let policy = policyFor(req.user);
-    if (!policy.can("create", "User")) {
-        return res.json({
-            error: 1,
-            message: `You're not allowed to perform this action`,
-        })
-    };
+    // let policy = policyFor(req.user);
+    // if (!policy.can("create", "User")) {
+    //     return res.json({
+    //         error: 1,
+    //         message: `You're not allowed to perform this action`,
+    //     })
+    // };
 
     try {
         const result = await userService.register(req.body);

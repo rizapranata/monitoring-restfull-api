@@ -11,6 +11,7 @@ import progressController from "../controller/progress-controller.js";
 import projectController from "../controller/project-controller.js";
 import multer from "multer";
 import os from "os";
+import paymentController from "../controller/payment-controller.js";
 
 const userRouter = new express.Router()
 userRouter.use(authMiddleware)
@@ -58,13 +59,27 @@ userRouter.delete('/api/print-medical-records/:medicalRecordId', printMedicalRec
 
 // Progress API
 userRouter.post('/api/progress', multer({ dest: os.tmpdir() }).array('images', 12), progressController.create);
+userRouter.post('/api/progress/add-image', multer({ dest: os.tmpdir() }).single('images', 12), progressController.addImage);
+userRouter.get('/api/progress', progressController.search);
+userRouter.get('/api/progresses', progressController.getAllProgress);
+userRouter.get('/api/progress/:progressId', progressController.get);
+userRouter.put('/api/progress/:progressId', progressController.update);
+userRouter.delete('/api/progress/:progressId', progressController.remove);
+userRouter.delete('/api/progress/image/:imageId', progressController.removeImage);
 
 // Project API
 userRouter.get('/api/projects', projectController.search);
 userRouter.post('/api/project', projectController.create);
+userRouter.get('/api/projects/all', projectController.getAllProject);
 userRouter.get('/api/project/:projectId', projectController.get);
 userRouter.put('/api/project/:projectId', projectController.update);
 userRouter.delete('/api/project/:projectId', projectController.remove);
+
+// Payment API
+userRouter.post('/api/payment', paymentController.create);
+userRouter.put('/api/payment/:paymentId', paymentController.update);
+userRouter.get('/api/payment/:paymentId', paymentController.get);
+userRouter.get('/api/payment', paymentController.getAll);
 
 export {
     userRouter
