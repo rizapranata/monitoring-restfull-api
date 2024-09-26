@@ -28,13 +28,13 @@ const create = async (req, res, next) => {
 };
 
 const getAllProgress = async (req, res, next) => {
-  let policy = policyFor(req.user);
-  if (!policy.can("view", "Progress")) {
-    return res.json({
-      error: 1,
-      message: `You're not allowed to perform this action`,
-    });
-  }
+  // let policy = policyFor(req.user);
+  // if (!policy.can("view", "Progress")) {
+  //   return res.json({
+  //     error: 1,
+  //     message: `You're not allowed to perform this action`,
+  //   });
+  // }
 
   try {
     const result = await progressService.getAll();
