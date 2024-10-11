@@ -47,15 +47,16 @@ model Project {
 }
 
 model Progress {
-  id             Int     @id @default(autoincrement())
-  title          String  @db.VarChar(225)
-  desc           String? @db.Text
+  id             Int      @id @default(autoincrement())
+  title          String   @db.VarChar(225)
+  desc           String?  @db.Text
   images         Image[]
-  username       String  @db.VarChar(100)
-  user           User    @relation(fields: [username], references: [username], onDelete: Cascade)
-  usernameClient String  @db.VarChar(100)
-  project        Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  username       String   @db.VarChar(100)
+  user           User     @relation(fields: [username], references: [username], onDelete: Cascade)
+  usernameClient String   @db.VarChar(100)
+  project        Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
   projectId      Int
+  created_at     DateTime @default(now())
 
   @@map("progresses")
 }
