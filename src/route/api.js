@@ -70,7 +70,6 @@ userRouter.delete('/api/progress/image/:imageId', progressController.removeImage
 // Project API
 userRouter.get('/api/projects', projectController.search);
 userRouter.post('/api/project', projectController.create);
-userRouter.get('/api/projects/all', projectController.getAllProject);
 userRouter.get('/api/project/:projectId', projectController.get);
 userRouter.put('/api/project/:projectId', projectController.update);
 userRouter.delete('/api/project/:projectId', projectController.remove);
@@ -79,7 +78,6 @@ userRouter.delete('/api/project/:projectId', projectController.remove);
 userRouter.post('/api/payment', paymentController.create);
 userRouter.put('/api/payment/:paymentId', paymentController.update);
 userRouter.get('/api/payment/:paymentId', paymentController.get);
-userRouter.get('/api/payment', paymentController.getAll);
 
 export {
     userRouter

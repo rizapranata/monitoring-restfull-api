@@ -26,10 +26,11 @@ model User {
 }
 
 model Payment {
-  id        Int     @id @default(autoincrement())
-  isSettle  Boolean @default(false) @db.Bit(1)
-  projectId Int     @unique
-  project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  id         Int     @id @default(autoincrement())
+  isSettle   Boolean @default(false) @db.Bit(1)
+  resiNumber String? @default("-") @db.VarChar(50)
+  projectId  Int     @unique
+  project    Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
 }
 
 model Project {

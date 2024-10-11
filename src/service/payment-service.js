@@ -79,6 +79,9 @@ const update = async (user, request) => {
     throw new ResponseError(400, "Project is not found");
   }
 
+  const randomNumber = Math.floor(Math.random() * 10000001);
+  const resiNum = `${payment.id.toString() + "0" + randomNumber.toString()}`;
+
   return prismaClient.payment.update({
     where: {
       id: payment.id,
@@ -86,6 +89,7 @@ const update = async (user, request) => {
     data: {
       id: payment.id,
       isSettle: payment.isSettle,
+      resiNumber: resiNum,
     },
     include: {
       project: true,
@@ -97,5 +101,5 @@ export default {
   create,
   get,
   update,
-  getAll
+  getAll,
 };

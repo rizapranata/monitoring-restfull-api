@@ -14,6 +14,7 @@ const create = async (user, request) => {
 
   const totalDataInDatabase = await prismaClient.project.count({
     where: {
+      usernameClient: request.usernameClient,
       name: project.name,
     },
   });
@@ -28,9 +29,6 @@ const create = async (user, request) => {
       progress: true,
     },
   });
-  
-
-  //TOTO tambahakan no resi pada table payment
 
   // membuat payment data setelah membuat project baru
   return prismaClient.payment.create({
